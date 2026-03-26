@@ -4,6 +4,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts.PickVisualMedia
 import androidx.compose.foundation.background
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -96,6 +98,12 @@ fun ToolbarContent(
                     .height(BUTTON_SIZE.dp)
                     .fillMaxWidth()
             ) {
+                // Left scrollable section: drawing tools
+                Row(
+                    Modifier
+                        .weight(1f)
+                        .horizontalScroll(rememberScrollState())
+                ) {
                 ToolbarButton(
                     onSelect = { onAction(ToolbarAction.ToggleToolbar) },
                     vectorIcon = FeatherIcons.EyeOff,
@@ -278,8 +286,10 @@ fun ToolbarContent(
                     VerticalDivider()
                 }
 
-                Spacer(Modifier.weight(1f))
+                } // end left scrollable Row
 
+                // Right fixed section: undo/redo, navigation, menu
+                Row {
                 VerticalDivider()
 
                 ToolbarButton(
@@ -333,6 +343,7 @@ fun ToolbarContent(
                         )
                     }
                 }
+                } // end right fixed Row
             }
 
             Box(
