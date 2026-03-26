@@ -32,6 +32,11 @@ jobs:
             -dname "CN=Android Debug,O=Android,C=US"
 
       - name: Build debug APK
+        env:
+          STORE_FILE: /home/runner/.android/debug.keystore
+          STORE_PASSWORD: android
+          KEY_ALIAS: androiddebugkey
+          KEY_PASSWORD: android
         run: ./gradlew assembleDebug -PDEBUG_STORE_FILE=$HOME/.android/debug.keystore
 
       - name: Upload APK
